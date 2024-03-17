@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loader {
+	width: 90px;
+	height: 14px;
+	background: linear-gradient(#766df4 0 0) left/0% 100% no-repeat #f9fafbcc;
+	animation: l1 4s infinite linear;
+}
+@keyframes l1 {
+	100% {
+		background-size: 100% 100%;
+	}
+}
