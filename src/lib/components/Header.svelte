@@ -2,18 +2,19 @@
 	import LogoSvg from './AssetLogoSvg.svelte';
 	import MoonFillSvg from '$lib/assets/Moon_fill.svg';
 	import SunFillSvg from '$lib/assets/Sun_fill.svg';
+	import { browser } from '$app/environment';
 
-	let state = window.localStorage.getItem('theme') || 'light';
+	let state = (browser && window.localStorage.getItem('theme')) || 'light';
 	function sItem(e: Event): void {
 		e.preventDefault();
 		if (state == 'dark') {
 			state = 'light';
 			document.documentElement.classList.remove('dark');
-			window.localStorage.setItem('theme', state);
+			browser && window.localStorage.setItem('theme', state);
 		} else {
 			state = 'dark';
 			document.documentElement.classList.add('dark');
-			window.localStorage.setItem('theme', state);
+			browser && window.localStorage.setItem('theme', state);
 		}
 	}
 </script>
