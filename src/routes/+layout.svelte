@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Header } from '$lib';
+	import { Header, Toaster } from '$lib';
 	import '../style.css';
 </script>
 
@@ -11,3 +11,5 @@
 	<Header />
 	<slot />
 </main>
+
+<Toaster />
