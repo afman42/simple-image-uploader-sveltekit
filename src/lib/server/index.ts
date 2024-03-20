@@ -10,7 +10,7 @@ export const images = sqliteTable('images', {
 export type Image = typeof images.$inferSelect;
 export type NewImage = typeof images.$inferInsert;
 
-const sqlite = new Database('sqlite.db');
+const sqlite = new Database('./src/lib/server/sqlite.db');
 const db = drizzle(sqlite);
 
 export const createImage = async (id: string) => {
