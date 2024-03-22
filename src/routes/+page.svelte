@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ArrowUpSvg from '$lib/assets/exit.svg';
-	import { Loader, fetchPost } from '$lib';
-	let toggle = true;
+	import { Loader, fetchPost, state } from '$lib';
+	import { goto } from '$app/navigation';
 	let dragCss = false;
 	let inputFile: HTMLInputElement | null = null;
 	const preventAndDragDrop = (e: DragEvent) => {
@@ -10,23 +10,31 @@
 	};
 	const droppedFiles = async (e: DragEvent) => {
 		e.preventDefault();
-		const formData = new FormData();
 		const fileList = e.dataTransfer?.files as FileList;
-		formData.append('name', fileList[0], fileList[0].name);
 		if (!fileList.length) return;
-		await fetchPost(formData);
+		const formData = new FormData();
+		formData.append('name', fileList[0], fileList[0].name);
+		const res = await fetchPost(formData);
+		if (res) {
+			goto('/' + res.path);
+		}
 	};
 	const submitHandler = async (e: SubmitEvent) => {
 		e.preventDefault();
-		const formData = new FormData();
-		const fileList = inputFile?.files as FileList;
-		formData.append('name', fileList[0], fileList[0].name);
-		if (!fileList.length) return;
-		await fetchPost(formData);
+		inputFile?.addEventListener('change', async (e: any) => {
+			let fileList = e.target.files as FileList;
+			if (!fileList.length) return;
+			const formData = new FormData();
+			formData.append('name', fileList[0], fileList[0].name);
+			let res = await fetchPost(formData);
+			if (res) {
+				goto('/' + res.path);
+			}
+		});
 	};
 </script>
 
-{#if toggle}
+{#if $state}
 	<div
 		class:border-red-500={dragCss}
 		aria-grabbed={dragCss}
