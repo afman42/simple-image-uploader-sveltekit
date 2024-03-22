@@ -1,4 +1,4 @@
-import { json, fail, error } from '@sveltejs/kit';
+import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import path from 'node:path';
 import fs from 'node:fs/promises';
