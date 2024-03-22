@@ -1,15 +1,15 @@
 <script lang="ts">
 	import LinkSvg from '$lib/assets/Link.svg';
 	import DownloadSvg from '$lib/assets/download.svg';
-	import type { PageData } from './$types';
-	export let data: PageData;
+	import type { PageServerData } from '../$types';
+	export let data: PageServerData;
 </script>
 
 <div
 	class="drop-shadow-md dark:bg-[#212936] bg-white h-72 w-2/4 rounded-md mx-auto flex justify-center items-center"
 	style="margin-top: 10%;"
 >
-	<img src={data.id} alt="img" class="w-full h-full p-2" />
+	<img src={'/img/' + data?.id + '.' + data?.type} alt="img" class="w-full h-full p-2" />
 </div>
 
 <div class="flex justify-center items-center space-x-2 mt-2">
