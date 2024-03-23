@@ -3,8 +3,17 @@
 	import MoonFillSvg from '$lib/assets/Moon_fill.svg';
 	import SunFillSvg from '$lib/assets/Sun_fill.svg';
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
 	let state = (browser && window.localStorage.getItem('theme')) || 'light';
+
+	onMount(() => {
+		if (state == 'light') {
+			document.documentElement.classList.remove('dark');
+		} else {
+			document.documentElement.classList.add('dark');
+		}
+	});
 	function sItem(e: Event): void {
 		e.preventDefault();
 		if (state == 'dark') {
