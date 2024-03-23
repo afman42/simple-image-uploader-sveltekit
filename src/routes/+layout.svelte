@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Portal from 'svelte-portal';
 	import { Header, Toaster } from '$lib';
 	import '../style.css';
 </script>
@@ -12,4 +13,6 @@
 	<slot />
 </main>
 
-<Toaster />
+<Portal target="body">
+	<Toaster />
+</Portal>
