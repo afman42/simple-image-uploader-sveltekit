@@ -19,12 +19,9 @@ export const createImage = async (id: string, type: string) => {
 };
 
 export const readImage = async (id: string) => {
-	return await db.select({ id: images.id, type: images.type }).from(images).where(eq(images.id, id)).limit(1);
-	// console.log(
-	// 	await db
-	// 		.select({ id: images.id, type: images.type })
-	// 		.from(images)
-	// 		.where(eq(images.id, id))
-	// 		.limit(1)
-	// );
+	return await db
+		.select({ id: images.id, type: images.type })
+		.from(images)
+		.where(eq(images.id, id))
+		.limit(1);
 };
