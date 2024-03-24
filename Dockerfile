@@ -1,4 +1,4 @@
-FROM node:20 AS build-env
+FROM node:20
 
 COPY . /app
 
@@ -12,12 +12,6 @@ RUN npm run build
 
 RUN npm ci --omit dev
 
-FROM gcr.io/distroless/nodejs20-debian12:latest
-
-COPY --from=build-env /app /app
-
-WORKDIR /app
-
 EXPOSE 8009
 
-CMD ['HOST','=','127.0.0.1', 'PORT','=','8009','node','build']
+CMD ['HOST=127.0.0.1', 'PORT=8009','node','build']
