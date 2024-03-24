@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  app_simple_upload:
+    container_name: app_simple_upload
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '127.0.0.1:8009:8009'
+    restart: unless-stopped
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    external: true
+    name: app-net
