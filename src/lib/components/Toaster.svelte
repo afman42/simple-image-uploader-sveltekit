@@ -1,97 +1,55 @@
-<script lang="ts">
-	import { storeToast, type TToastStatus } from '$lib/store/state';
-	import { quintOut } from 'svelte/easing';
-  import { scale } from 'svelte/transition';
+<script>
+	import { flip } from 'svelte/animate';
+	import { fly } from 'svelte/transition';
+	import { toasts } from '../store/state';
 
-	const toastClassMap: Record<TToastStatus, string> = {
-		warning: 'text-orange-500',
-		error: 'text-red-500',
-		success: 'text-green-500'
+	let themes = {
+		error: '#E26D69',
+		success: '#84C991',
+		warning: '#f0ad4e',
+		info: '#5bc0de'
 	};
-
-	const store = storeToast();
+	const { state } = toasts;
 </script>
 
-{#if store.lengthToast}
-	<div class="fixed flex flex-col bottom-10 right-10 gap-4">
-		{#each store.getToast as toast (toast.id)}
-			<li transition:scale={{ duration: 500, delay: 500, opacity: 0.5, start: 0.5, easing: quintOut }} class={toast.status ? toastClassMap[toast.status] : ''}>
-				<span class="toaster__inner-text font-inter font-medium">
-					{toast.text}
-				</span>
-			</li>
-		{/each}
-	</div>
-{/if}
-<!---->
-<!-- <style scoped lang="scss"> -->
-<!-- .toast-enter-from, -->
-<!-- .toast-leave-to { -->
-<!--   transform: translateX(100%); -->
-<!--   opacity: 0; -->
-<!-- } -->
-<!---->
-<!-- .toast-enter-active, -->
-<!-- .toast-leave-active { -->
-<!--   transition: 0.25s ease all; -->
-<!-- } -->
-<!---->
-<!-- .toaster { -->
-<!--   &__wrapper { -->
-<!--     position: fixed; -->
-<!--     bottom: 3%; -->
-<!--     right: 5%; -->
-<!---->
-<!--     z-index: 100; -->
-<!---->
-<!--     display: flex; -->
-<!--     flex-direction: column; -->
-<!--     gap: 1rem; -->
-<!--   } -->
-<!---->
-<!--   &__inner { -->
-<!--     --color: black; -->
-<!--     display: flex; -->
-<!--     align-items: center; -->
-<!--     gap: 1rem; -->
-<!--     margin-bottom: 5px; -->
-<!---->
-<!--     border-radius: 0.3rem; -->
-<!---->
-<!--     border: 1px solid transparent; -->
-<!---->
-<!--     background-color: white; -->
-<!---->
-<!--     padding: 1rem 1.6rem; -->
-<!---->
-<!--     border-color: var(--color); -->
-<!--     color: var(--color); -->
-<!--     svg { -->
-<!--       fill: var(--color); -->
-<!--       stroke: var(--color); -->
-<!--     } -->
-<!---->
-<!--     &.success { -->
-<!--       --color: green; -->
-<!--     } -->
-<!---->
-<!--     &.warning { -->
-<!--       --color: orange; -->
-<!--     } -->
-<!---->
-<!--     &.error { -->
-<!--       --color: red; -->
-<!--     } -->
-<!---->
-<!--     &-icon { -->
-<!--       width: 1.8rem; -->
-<!--       aspect-ratio: 1/1; -->
-<!--     } -->
-<!---->
-<!--     &-text { -->
-<!--       font-size: 1rem; -->
-<!--       font-weight: 400; -->
-<!--     } -->
-<!--   } -->
-<!-- } -->
-<!-- </style> -->
+<div class="notifications">
+	{#each $state as toast (toast.id)}
+		<div
+			animate:flip
+			class="toast"
+			style="background: {themes[toast.type]};"
+			transition:fly={{ y: 30 }}
+		>
+			<div class="content">{toast.message}</div>
+		</div>
+	{/each}
+</div>
+
+<style>
+	.notifications {
+		position: fixed;
+		top: 10px;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		padding: 0;
+		z-index: 9999;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		pointer-events: none;
+	}
+
+	.toast {
+		flex: 0 0 auto;
+		margin-bottom: 10px;
+	}
+
+	.content {
+		padding: 10px;
+		display: block;
+		color: white;
+		font-weight: 500;
+	}
+</style>

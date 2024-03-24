@@ -1,21 +1,21 @@
-import { state } from '$lib/store/state';
+import { state, toasts } from '$lib/store/state';
 
 export const fetchPost = async (formData: FormData) => {
 	state.update((n) => (n = false));
+	toasts.info('Loading... upload', 1000);
 	const res = await fetch('/api/upload', {
 		method: 'POST',
 		body: formData
 	});
 	if (res.ok) {
 		state.update((n) => (n = false));
-		// successToast({ text: 'Successfully create' });
+		toasts.success('Successfully upload', 1000);
 		return await res.json();
 	} else {
 		let jsonParse = JSON.parse(await res.text());
 		if (jsonParse.status == 422) {
-			jsonParse.data.name._errors.forEach((v: any) => {
-				console.log(v);
-				// errorToast({ text: 'Error: Something went wrong' });
+			jsonParse.data.name._errors.forEach((v: string) => {
+				toasts.error(v, 2000);
 			});
 		}
 		state.update((n) => (n = true));
