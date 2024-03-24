@@ -14,4 +14,8 @@ RUN npm ci --omit dev
 
 EXPOSE 8009
 
-CMD ['HOST=127.0.0.1', 'PORT=8009','node','build']
+ENV HOST=127.0.0.1
+
+ENV PORT=8009
+
+CMD ["node","build"]
