@@ -5,6 +5,6 @@ run/prod:
 
 deploy:
 	@echo "Deploy"
-	rsync -av -e 'ssh -i ~/.ssh/id_ed_llubuntu' static src drizzle .dockerignore .gitignore .npmrc Dockerfile drizzle.config.ts Makefile package-lock.json package.json postcss.config.js svelte.config.js tailwind.config.js tsconfig.json vite.config.ts root@just-wrapper.my.id:~/simple-image-upload;
+	rsync -av -e 'ssh -i ~/.ssh/id_ed_llubuntu' static src drizzle .dockerignore .gitignore .npmrc Dockerfile drizzle.config.ts Makefile package-lock.json package.json postcss.config.js svelte.config.js tailwind.config.js tsconfig.json vite.config.ts docker-compose.yml root@just-wrapper.my.id:~/simple-image-upload;
 	@echo "Finish"
 
