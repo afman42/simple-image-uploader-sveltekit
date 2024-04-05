@@ -18,3 +18,8 @@ Challenge: https://devchallenges.io/challenge/image-upload-app
 - [x] After the image is uploaded, users can download the image by selecting the `Download` button
 - [x] Optionally, users change theme between dark and light.
 - [] Deploy the solution and submit Repository URL and Demo URL.
+
+# Prod
+
+- Adapter Node: ORIGIN=http://0.0.0.0:8009 BODY_SIZE_LIMIT=2048000 node build/index.js
+
