@@ -18,7 +18,7 @@ COPY --from=build-env /app /app
 
 WORKDIR /app
 
-ENV ORIGIN=http://0.0.0.0:8009
+ENV ORIGIN=http://localhost:8009
 
 ENV BODY_SIZE_LIMIT=2048000
 
