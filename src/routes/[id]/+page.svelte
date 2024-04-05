@@ -2,7 +2,18 @@
 	import LinkSvg from '$lib/assets/Link.svg';
 	import DownloadSvg from '$lib/assets/download.svg';
 	import type { PageData } from './$types';
+	import { fetchGetImage } from '$lib';
+	import { onMount } from 'svelte';
 	export let data: PageData;
+
+	let nameFile: null | string = null;
+	async function fetchImage(id: string) {
+		const res = await fetchGetImage(id);
+		nameFile = URL.createObjectURL(res);
+	}
+	onMount(() => {
+		fetchImage(data?.id);
+	});
 	function ShareLink(e: Event) {
 		e.preventDefault();
 		navigator.clipboard.writeText(window.location + '');
@@ -10,8 +21,8 @@
 	function DownloadFile(e: Event) {
 		e.preventDefault();
 		var link = document.createElement('a');
-		link.setAttribute('download', data?.id + '.' + data?.type);
-		link.href = '/img/' + data?.id + '.' + data?.type;
+		link.setAttribute('download', data?.id + data?.type);
+		link.href = nameFile as string;
 		document.body.appendChild(link);
 		link.click();
 		link.remove();
@@ -22,7 +33,7 @@
 	class="drop-shadow-md dark:bg-[#212936] bg-white h-72 w-2/4 rounded-md mx-auto flex justify-center items-center"
 	style="margin-top: 10%;"
 >
-	<img src={'/img/' + data?.id + '.' + data?.type} alt="img" class="w-full h-full p-2" />
+	<img src={nameFile} alt="img" class="w-full h-full p-2" />
 </div>
 
 <div class="flex justify-center items-center space-x-2 mt-2">
