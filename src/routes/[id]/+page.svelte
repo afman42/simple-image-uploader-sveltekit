@@ -4,6 +4,7 @@
 	import type { PageData } from './$types';
 	import { fetchGetImage } from '$lib';
 	import { onMount } from 'svelte';
+	import { toasts } from '$lib';
 	export let data: PageData;
 
 	let nameFile: null | string = null;
@@ -16,10 +17,12 @@
 	});
 	function ShareLink(e: Event) {
 		e.preventDefault();
+		toasts.success('success clipboard',2000);
 		navigator.clipboard.writeText(window.location + '');
 	}
 	function DownloadFile(e: Event) {
 		e.preventDefault();
+		toasts.info('Downloading',2000);
 		var link = document.createElement('a');
 		link.setAttribute('download', data?.id + data?.type);
 		link.href = nameFile as string;
