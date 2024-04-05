@@ -1,4 +1,4 @@
-import { json, error } from '@sveltejs/kit';
+import { json, error, text } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import path from 'node:path';
 import fs from 'node:fs/promises';
@@ -11,9 +11,17 @@ export const POST: RequestHandler = async (event) => {
 	const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 	const data = await event.request.formData();
 	const typeImage = `${(data.get('name') as Blob).type.split('/')[1]}`;
-	const name = `${crypto.randomUUID()}`;
+	let tpe =
+		typeImage == 'jpeg'
+			? '1'
+			: typeImage == 'jpg'
+				? '2'
+				: typeImage == 'png'
+					? '3'
+					: '4';
+	const name = `${crypto.randomUUID()}.${tpe}`;
 	const filename = `${name}.${typeImage}`;
-	const filePath = path.join(process.cwd(), 'static', 'img', filename);
+	const filePath = path.join(process.cwd(), 'src', 'bucket', 'img', filename);
 	const fileSchema = z.object({
 		name: z
 			.any()
@@ -34,4 +42,8 @@ export const POST: RequestHandler = async (event) => {
 
 	await createImage(name, typeImage);
 	return json({ path: name });
+};
+
+export const fallback: RequestHandler = async ({ request }) => {
+	return text(`I caught your ${request.method} request!`);
 };
