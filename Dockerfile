@@ -18,10 +18,10 @@ COPY --from=build-env /app /app
 
 WORKDIR /app
 
-ENV HOST=0.0.0.0
+ENV ORIGIN=http://0.0.0.0:8009
 
-ENV PORT=8009
+ENV BODY_SIZE_LIMIT=2048000
 
 EXPOSE 8009
 
-CMD ["build"]
+CMD ["build/index.js"]
