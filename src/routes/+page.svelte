@@ -1,9 +1,12 @@
 <script lang="ts">
 	import ArrowUpSvg from '$lib/assets/exit.svg';
 	import { fetchPost, state } from '$lib';
-	import { goto } from '$app/navigation';
+	import { goto, afterNavigate } from '$app/navigation';
 	let dragCss = false;
 	let inputFile: HTMLInputElement | null = null;
+	afterNavigate(() => {
+		$state = true
+	})
 	const preventAndDragDrop = (e: DragEvent) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -73,7 +76,12 @@
 					on:submit={submitHandler}
 					enctype="multipart/form-data"
 				>
-					<input type="file" hidden bind:this={inputFile} /><button
+					<input
+						type="file"
+						accept="image/png, image/gif, image/jpeg, image/jpg"
+						hidden
+						bind:this={inputFile}
+					/><button
 						type="submit"
 						on:click={(_) => inputFile?.click()}
 						class="text-blue-500 dark:text-[#3662E3] text-sm dark:font-semibold font-inter"
