@@ -21,5 +21,5 @@ Challenge: https://devchallenges.io/challenge/image-upload-app
 
 # Prod
 
-- Adapter Node: ORIGIN=http://0.0.0.0:8009 BODY_SIZE_LIMIT=2048000 node build/index.js
+- Adapter Node: ORIGIN=http://localhost:8009 BODY_SIZE_LIMIT=2048000 node build/index.js
 
