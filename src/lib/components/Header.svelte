@@ -29,7 +29,7 @@
 </script>
 
 <div class="flex justify-between py-4 px-8 dark:bg-[#121826]">
-	<svelte:component this={LogoSvg} textWhite={state == 'dark' ? '#fff' : 'black'} />
+	<a href="/"><svelte:component this={LogoSvg} textWhite={state == 'dark' ? '#fff' : 'black'} /></a>
 	<button on:click={sItem}>
 		<img
 			src={state == 'dark' ? SunFillSvg : MoonFillSvg}
