@@ -3,12 +3,15 @@
 	import { Header, Toaster } from '$lib';
 	import '../style.css';
 	import { tick } from 'svelte';
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
 
-	let completedDocument = false;
+	const completedDocument = writable(true);
 	async function isReady() {
 		await tick();
-		completedDocument = true;
+		$completedDocument = false;
 	}
+	setContext('completedDocument', completedDocument);
 	isReady();
 </script>
 
@@ -18,11 +21,7 @@
 
 <main class="min-h-screen bg-[#F9FAFB] dark:bg-[#121826]">
 	<Header />
-	{#if completedDocument}
-		<slot />
-	{:else}
-		<div class="flex justify-center items-center" style="margin-top:10%;">Loading...</div>
-	{/if}
+	<slot />
 </main>
 
 <Portal target="body">
