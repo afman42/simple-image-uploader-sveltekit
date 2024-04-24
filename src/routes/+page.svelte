@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ArrowUpSvg from '$lib/assets/exit.svg';
-	import { fetchPost, state, toasts } from '$lib';
+	import { fetchPost, state } from '$lib';
 	import { goto, afterNavigate } from '$app/navigation';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
