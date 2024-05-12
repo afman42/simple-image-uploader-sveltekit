@@ -1,2 +1,1 @@
-export { fetchPost } from "./fetchPost"
-export { fetchGetImage } from "./fetchGetImage"
+export { fetchPost } from './fetchPost';
