@@ -2,21 +2,11 @@
 	import LinkSvg from '$lib/assets/Link.svg';
 	import DownloadSvg from '$lib/assets/download.svg';
 	import type { PageData } from './$types';
-	import { fetchGetImage } from '$lib';
-	import { onMount } from 'svelte';
 	import { toasts } from '$lib';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	const completedDocument = getContext('completedDocument') as Writable<boolean>;
 	export let data: PageData;
-	let nameFile: null | string = null;
-	async function fetchImage(id: string) {
-		const res = await fetchGetImage(id);
-		nameFile = URL.createObjectURL(res);
-	}
-	onMount(() => {
-		fetchImage(data?.id);
-	});
 	function ShareLink(e: Event) {
 		e.preventDefault();
 		toasts.success('success clipboard', 2000);
@@ -27,7 +17,7 @@
 		toasts.info('Downloading', 2000);
 		var link = document.createElement('a');
 		link.setAttribute('download', data?.id + data?.type);
-		link.href = nameFile as string;
+		link.href = data.nameFile as string;
 		document.body.appendChild(link);
 		link.click();
 		link.remove();
@@ -43,7 +33,7 @@
 		class="drop-shadow-md dark:bg-[#212936] bg-white h-72 w-2/4 rounded-md mx-auto flex justify-center items-center"
 		style="margin-top: 10%;"
 	>
-		<img src={nameFile} alt="img" class="w-full h-full p-2" />
+		<img src={data.nameFile} alt="img" class="w-full h-full p-2" />
 	</div>
 
 	<div class="flex justify-center items-center space-x-2 mt-2">
